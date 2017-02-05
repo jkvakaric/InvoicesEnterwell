@@ -3,12 +3,19 @@
     ViewBag.Title = "Manage";
 }
 
-<h2>@ViewBag.Title.</h2>
+<h2 class="text-center">@ViewBag.Title</h2>
+<h4 class="text-center">Change your account settings.</h4>
 
-<p class="text-success">@ViewBag.StatusMessage</p>
+<p class="text-success text-center">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Change your account settings</h4>
     <hr />
+    
+    <div class="text-center">
+        <strong>Password: </strong>
+        <span>[ @Html.ActionLink("Change your password", "ChangePassword") ]</span><br />
+    </div>
+
+    @*
     <dl class="dl-horizontal">
         <dt>Password:</dt>
         <dd>
@@ -17,15 +24,12 @@
             {
                 @Html.ActionLink("Change your password", "ChangePassword")
             }
-            @*
                 else
                 {
                     @Html.ActionLink("Create", "SetPassword")
                 }
-            *@
             ]
         </dd>
-        @*
             <dt>External Logins:</dt>
             <dd>
                 @Model.Logins.Count [
@@ -85,6 +89,7 @@
                     }
                 }
         </dd>
-        *@
+        
     </dl>
+    *@
 </div>
