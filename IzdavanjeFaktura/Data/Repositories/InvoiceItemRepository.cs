@@ -27,17 +27,18 @@ namespace IzdavanjeFaktura.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Remove(Guid userId, Guid itemId)
+        public bool Remove(Guid userId, Guid itemId)
         {
             var item = Get(itemId);
-            if (item == null) return;
+            if (item == null) return false;
             if (item.Invoice.Creator.Id != userId.ToString())
             {
-                throw new UnauthorizedAccessException();
+                return false;
             }
 
             _context.InvoiceItems.Remove(item);
             _context.SaveChanges();
+            return true;
         }
 
         public IEnumerable<InvoiceItem> GetInvoiceItems(Guid userId, Guid invoiceId)
@@ -45,13 +46,8 @@ namespace IzdavanjeFaktura.Data.Repositories
             var invoiceItems = _context.InvoiceItems
                 .Where(ii => ii.Invoice.Id == invoiceId);
 
-            if (!invoiceItems.Any()) return invoiceItems;
-            if (invoiceItems.First().Invoice.Creator.Id != userId.ToString())
-            {
-                throw new UnauthorizedAccessException();
-            }
-
-            return invoiceItems;
+            if (!invoiceItems.Any()) return null;
+            return invoiceItems.First().Invoice.Creator.Id != userId.ToString() ? null : invoiceItems;
         }
     }
 }

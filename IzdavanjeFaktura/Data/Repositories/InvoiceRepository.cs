@@ -26,9 +26,7 @@ namespace IzdavanjeFaktura.Data.Repositories
                 .FirstOrDefault(i => i.Id == invoiceId);
 
             if (invoice == null) return null;
-            if (invoice.Creator.Id != userId.ToString()) throw new UnauthorizedAccessException();
-
-            return invoice;
+            return invoice.Creator.Id != userId.ToString() ? null : invoice;
         }
 
         public void Add(Invoice invoice)
@@ -37,21 +35,24 @@ namespace IzdavanjeFaktura.Data.Repositories
             _context.SaveChanges();
         }
 
-        public void Update(Guid userId, Invoice invoice)
+        public bool Update(Guid userId, Invoice invoice)
         {
-            if (invoice.Creator.Id != userId.ToString()) throw new UnauthorizedAccessException();
-            
+            if (invoice.Creator.Id != userId.ToString()) return false;
+
+
             _context.Entry(invoice).State = EntityState.Modified;
             _context.SaveChanges();
+            return true;
         }
 
-        public void Remove(Guid userId, Guid invoiceId)
+        public bool Remove(Guid userId, Guid invoiceId)
         {
             var invoice = Get(userId, invoiceId);
-            if (invoice == null) return;
+            if (invoice == null) return false;
 
             _context.Invoices.Remove(invoice);
             _context.SaveChanges();
+            return true;
         }
 
         public Invoice GetWithItems(Guid userId, Guid invoiceId)
@@ -60,12 +61,7 @@ namespace IzdavanjeFaktura.Data.Repositories
                 .FirstOrDefault(i => i.Id == invoiceId);
 
             if (invoice == null) return null;
-            if (invoice.Creator.Id != userId.ToString())
-            {
-                throw new UnauthorizedAccessException();
-            }
-
-            return invoice;
+            return invoice.Creator.Id != userId.ToString() ? null : invoice;
         }
     }
 }
