@@ -1,0 +1,63 @@
+﻿@model IEnumerable<IzdavanjeFaktura.Models.InvoiceItem>
+@{
+    ViewBag.Title = "Invoice Items";
+}
+
+<h2 class="text-center">Invoice Items</h2>
+<h4 class="text-center">Invoice Number: @ViewData["invoiceNumber"]</h4>
+
+<p class="text-center">
+    <strong>@Html.ActionLink("Add New Item", "AddItem", new { id = ViewData["invoiceId"] })</strong>
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoVatItemPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalNoVatPrice)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoVatItemPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalNoVatPrice)
+            </td>
+            <td>
+                @using (Html.BeginForm("RemoveItem", "Invoices", new { id = item.Id, invoiceId = item.Invoice.Id }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-actions no-color">
+                        <button type="submit" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </button>
+                    </div>
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="text-center">
+    @Html.ActionLink("Back to List", "Index")
+</div>
