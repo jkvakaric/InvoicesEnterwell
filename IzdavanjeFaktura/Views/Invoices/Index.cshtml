@@ -1,0 +1,65 @@
+﻿@model IEnumerable<IzdavanjeFaktura.Models.Invoice>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="text-center">Index</h2>
+
+<p class="text-center">
+    <strong>@Html.ActionLink("Create New", "Create")</strong>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Number)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DueDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoVatPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Receiver)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoVatPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Receiver)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                <strong>@Html.ActionLink("InvoiceItems", "GetItems", new { id = item.Id })</strong>
+            </td>
+        </tr>
+    }
+
+</table>

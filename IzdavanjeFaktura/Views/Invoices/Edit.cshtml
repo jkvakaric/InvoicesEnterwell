@@ -1,0 +1,64 @@
+﻿@model IzdavanjeFaktura.Models.Invoice
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2 class="text-center">Edit</h2>
+<h4 class="text-center">Invoice</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2 col-md-offset-3 col-sm-2 col-sm-offset-2" })
+            <div class="col-md-7 col-sm-8">
+                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DueDateTime, htmlAttributes: new { @class = "control-label col-md-2 col-md-offset-3 col-sm-2 col-sm-offset-2" })
+            <div class="col-md-7 col-sm-8">
+                @Html.EditorFor(model => model.DueDateTime, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DueDateTime, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Receiver, htmlAttributes: new { @class = "control-label col-md-2 col-md-offset-3 col-sm-2 col-sm-offset-2" })
+            <div class="col-md-7 col-sm-8">
+                @Html.EditorFor(model => model.Receiver, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Receiver, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Vat, htmlAttributes: new { @class = "control-label col-md-2 col-md-offset-3 col-sm-2 col-sm-offset-2" })
+            <div class="col-md-7 col-sm-8">
+                @Html.EnumDropDownListFor(model => model.Vat, htmlAttributes: new { @class = "control-label" })
+                @Html.ValidationMessageFor(model => model.Vat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-5 col-md-7 col-sm-offset-4 col-sm-8">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div class="text-center">
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
