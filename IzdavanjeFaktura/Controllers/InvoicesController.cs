@@ -26,28 +26,11 @@ namespace IzdavanjeFaktura.Controllers
             _invoiceItemRepository = new InvoiceItemRepository(_context);
         }
 
-        public InvoicesController(IInvoiceRepository invoiceRepository, IInvoiceItemRepository invoiceItemRepository)
-        {
-            _invoiceRepository = invoiceRepository;
-            _invoiceItemRepository = invoiceItemRepository;
-        }
-
         // GET: Invoices
         public ActionResult Index()
         {
             return View(_invoiceRepository.GetAll(GetCurrentUserId()));
         }
-
-        // GET: Invoices/Details/5
-        //public ActionResult Details(Guid? id)
-        //{
-        //    if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
-        //    var invoice = _invoiceRepository.Get(GetCurrentUserId(), id.Value);
-        //    if (invoice == null) return HttpNotFound();
-
-        //    return View(invoice);
-        //}
 
         // GET: Invoices/Create
         public ActionResult Create()
@@ -122,10 +105,11 @@ namespace IzdavanjeFaktura.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Invoices/GetItems/5
-        public ActionResult GetItems(Guid id)
+        // GET: Invoices/Items/5
+        public ActionResult Items(Guid id)
         {
             var invoiceItems = _invoiceItemRepository.GetInvoiceItems(GetCurrentUserId(), id);
+
             if (invoiceItems == null) return HttpNotFound();
 
             var invoice = _invoiceRepository.Get(GetCurrentUserId(), id);
@@ -169,7 +153,7 @@ namespace IzdavanjeFaktura.Controllers
 
             _invoiceItemRepository.Add(item);
 
-            return RedirectToAction("GetItems", new { id });
+            return RedirectToAction("Items", new { id });
         }
 
         // POST: Invoices/RemoveItem/5
@@ -190,8 +174,8 @@ namespace IzdavanjeFaktura.Controllers
             _invoiceRepository.Update(GetCurrentUserId(), invoice);
 
             _invoiceItemRepository.Remove(GetCurrentUserId(), id);
-
-            return RedirectToAction("GetItems", new { id = invoiceId });
+            
+            return RedirectToAction("Items", new { id = invoiceId });
         }
 
 
