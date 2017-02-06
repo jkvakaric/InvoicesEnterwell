@@ -11,8 +11,8 @@ namespace IzdavanjeFaktura
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}/{iditem}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, iditem = UrlParameter.Optional }
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
