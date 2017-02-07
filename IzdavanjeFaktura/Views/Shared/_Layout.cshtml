@@ -24,11 +24,6 @@
                     {
                         <li>@Html.ActionLink("Invoices", "Index", "Invoices")</li>
                     }
-                    @*
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    *@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -38,7 +33,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p class="text-center">&copy; @DateTime.Now.Year - Izdavanje Faktura</p>
+            <p class="text-center">&copy; @DateTime.Now.Year · Izdavanje Faktura</p>
         </footer>
     </div>
 
