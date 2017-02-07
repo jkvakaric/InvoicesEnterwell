@@ -1,29 +1,34 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Net;
 using System.Security;
 using System.Web.Mvc;
 using IzdavanjeFaktura.Data;
 using IzdavanjeFaktura.Models;
 using IzdavanjeFaktura.Data.Repositories;
+using IzdavanjeFaktura.Extensions;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Rotativa.Options;
 
 namespace IzdavanjeFaktura.Controllers
 {
     [Authorize]
     public class InvoicesController : Controller
     {
+        private readonly InvoicesDbContext _context = new InvoicesDbContext();
         private readonly ApplicationUserManager _userManager;
         private readonly IInvoiceRepository _invoiceRepository;
         private readonly IInvoiceItemRepository _invoiceItemRepository;
 
-        private readonly InvoicesDbContext _context = new InvoicesDbContext();
+        [Import(typeof(IVatCalculator))] private IVatCalculator _vatCalculator;
 
         public InvoicesController()
         {
             _userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(_context));
             _invoiceRepository = new InvoiceRepository(_context);
             _invoiceItemRepository = new InvoiceItemRepository(_context);
+            MefLoader.Compose(this);
         }
 
         // GET: Invoices
@@ -143,12 +148,9 @@ namespace IzdavanjeFaktura.Controllers
             item.Invoice = invoice;
 
             invoice.NoVatPrice += item.TotalNoVatPrice;
-
-
-
-
-
-
+            var fullprice = _vatCalculator.CalculateFullPrice(invoice.NoVatPrice, invoice.Vat);
+            invoice.FullPrice = fullprice;
+            
             _invoiceRepository.Update(GetCurrentUserId(), invoice);
 
             _invoiceItemRepository.Add(item);
@@ -156,7 +158,7 @@ namespace IzdavanjeFaktura.Controllers
             return RedirectToAction("Items", new { id });
         }
 
-        // POST: Invoices/RemoveItem/5
+        // POST: Invoices/RemoveItem/7
         [HttpPost, ActionName("RemoveItem")]
         [ValidateAntiForgeryToken]
         public ActionResult RemoveItem(Guid id, Guid invoiceId)
@@ -165,11 +167,8 @@ namespace IzdavanjeFaktura.Controllers
             var invoice = _invoiceRepository.GetWithItems(GetCurrentUserId(), invoiceId);
 
             invoice.NoVatPrice -= item.TotalNoVatPrice;
-
-
-
-
-
+            var fullprice = _vatCalculator.CalculateFullPrice(invoice.NoVatPrice, invoice.Vat);
+            invoice.FullPrice = fullprice;
 
             _invoiceRepository.Update(GetCurrentUserId(), invoice);
 
@@ -178,6 +177,19 @@ namespace IzdavanjeFaktura.Controllers
             return RedirectToAction("Items", new { id = invoiceId });
         }
 
+        // GET: Invoices/PrintInvoice/5
+        public ActionResult PrintInvoice(Guid id)
+        {
+            var invoice = _invoiceRepository.GetWithItems(GetCurrentUserId(), id);
+
+            var result = new Rotativa.ViewAsPdf("Invoice", invoice)
+            {
+                FileName = "invoice.pdf",
+                PageSize = Size.A4
+            };
+
+            return result;
+        }
 
         protected override void Dispose(bool disposing)
         {

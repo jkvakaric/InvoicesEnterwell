@@ -56,7 +56,8 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
-                <strong>@Html.ActionLink("InvoiceItems", "Items", new { id = item.Id })</strong>
+                <strong>@Html.ActionLink("InvoiceItems", "Items", new { id = item.Id })</strong> |
+                <strong>@Html.ActionLink("PDF", "PrintInvoice", new { id = item.Id })</strong>
             </td>
         </tr>
     }
