@@ -41,13 +41,12 @@ namespace IzdavanjeFaktura.Data.Repositories
             return true;
         }
 
-        public IEnumerable<InvoiceItem> GetInvoiceItems(Guid userId, Guid invoiceId)
+        public IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId)
         {
             var invoiceItems = _context.InvoiceItems
                 .Where(ii => ii.Invoice.Id == invoiceId);
 
-            if (!invoiceItems.Any()) return null;
-            return invoiceItems.First().Invoice.Creator.Id != userId.ToString() ? null : invoiceItems;
+            return invoiceItems;
         }
     }
 }

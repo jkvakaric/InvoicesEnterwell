@@ -9,6 +9,6 @@ namespace IzdavanjeFaktura.Data.Repositories
         InvoiceItem Get(Guid itemId);
         void Add(InvoiceItem item);
         bool Remove(Guid userId, Guid itemId);
-        IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId, Guid userId);
+        IEnumerable<InvoiceItem> GetInvoiceItems(Guid invoiceId);
     }
 }

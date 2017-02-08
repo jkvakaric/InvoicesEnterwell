@@ -120,7 +120,7 @@ namespace IzdavanjeFaktura.Controllers
         // GET: Invoices/Items/5
         public ActionResult Items(Guid id)
         {
-            var invoiceItems = _invoiceItemRepository.GetInvoiceItems(GetCurrentUserId(), id);
+            var invoiceItems = _invoiceItemRepository.GetInvoiceItems(id);
 
             if (invoiceItems == null) return HttpNotFound();
 
@@ -131,7 +131,7 @@ namespace IzdavanjeFaktura.Controllers
             return View(invoiceItems);
         }
 
-        // GET Invoices/AddItem/5
+        // GET: Invoices/AddItem/5
         public ActionResult AddItem(Guid id)
         {
             var invoice = _invoiceRepository.Get(GetCurrentUserId(), id);
