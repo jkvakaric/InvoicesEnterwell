@@ -34,7 +34,7 @@ namespace IzdavanjeFaktura.Models
 
         public enum VatType
         {
-            Croatian, Bosnian, Slovenian
+            Croatia, Bosnia, Slovenia
         }
     }
 }

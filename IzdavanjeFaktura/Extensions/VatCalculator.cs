@@ -11,11 +11,11 @@ namespace IzdavanjeFaktura.Extensions
         {
             switch (type)
             {
-                case Invoice.VatType.Croatian:
+                case Invoice.VatType.Croatia:
                     return Calculate(noVatPrice, 0.25);
-                case Invoice.VatType.Bosnian:
+                case Invoice.VatType.Bosnia:
                     return Calculate(noVatPrice, 0.17);
-                case Invoice.VatType.Slovenian:
+                case Invoice.VatType.Slovenia:
                     return Calculate(noVatPrice, 0.22);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

@@ -29,6 +29,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Receiver)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vat)
+        </th>
         <th></th>
     </tr>
 
@@ -52,6 +55,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Receiver)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vat)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
