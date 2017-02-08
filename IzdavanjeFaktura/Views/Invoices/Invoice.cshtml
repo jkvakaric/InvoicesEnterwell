@@ -1,18 +1,62 @@
 ﻿@model IzdavanjeFaktura.Models.Invoice
-
 @{
     Layout = null;
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <title>@Model.Receiver - @Model.Number</title>
 </head>
 <body>
-<div>
-    Invoice Data  
-</div>
+    <div>
+        <div>
+            <h1 style="float: left">@Model.Creator.UserName</h1>
+            <h1 style="float: right">INVOICE</h1>
+        </div>
+        <div style="clear: both"></div>
+        <hr/>
+        <div>
+            <h2>@Html.DisplayNameFor(model => model.Number): @Model.Number</h2>
+            <h4>@Html.DisplayNameFor(model => model.Receiver): @Model.Receiver</h4>
+            <h4>@Html.DisplayNameFor(model => model.DateCreated): @Html.DisplayFor(model => model.DateCreated)</h4>
+            <h4>@Html.DisplayNameFor(model => model.DueDateTime): @Html.DisplayFor(model => model.DueDateTime)</h4>
+        </div>
+        <hr />
+        <table class="table" style="width: 100%; text-align: center">
+            <tr>
+                <th>Description</th>
+                <th>NoVAT Item Price</th>
+                <th>Quantity</th>
+                <th>Total NoVAT Price</th>
+            </tr>
+
+            @foreach (var item in Model.InvoiceItems)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoVatItemPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TotalNoVatPrice)
+                    </td>
+                </tr>
+            }
+        </table>
+        <hr/>
+        <div style="text-align: right">
+            <h3><strong>@Html.DisplayNameFor(model=>model.NoVatPrice): @Html.DisplayFor(model=>model.NoVatPrice)</strong></h3>
+            <h3><strong>@Html.DisplayNameFor(model => model.Vat): @Html.DisplayFor(model => model.Vat)</strong></h3>
+            <h3><strong>@Html.DisplayNameFor(model => model.FullPrice): @Html.DisplayFor(model => model.FullPrice)</strong></h3>
+        </div>
+        <hr/>
+        <p style="text-align: center">This invoice is valid in electronic form.</p>
+    </div>
 </body>
 </html>
