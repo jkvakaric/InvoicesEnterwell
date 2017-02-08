@@ -79,6 +79,13 @@ namespace IzdavanjeFaktura.Controllers
             if (!ModelState.IsValid) return View(invoice);
 
             var invoiceToUpdate = _invoiceRepository.Get(GetCurrentUserId(), invoice.Id);
+
+            if (invoiceToUpdate.Vat != invoice.Vat)
+            {
+                var fullprice = _vatCalculator.CalculateFullPrice(invoiceToUpdate.NoVatPrice, invoice.Vat);
+                invoiceToUpdate.FullPrice = fullprice;
+            }
+
             invoiceToUpdate.Number = invoice.Number;
             invoiceToUpdate.DueDateTime = invoice.DueDateTime;
             invoiceToUpdate.Vat = invoice.Vat;
