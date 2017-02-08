@@ -9,7 +9,7 @@ namespace IzdavanjeFaktura.Data
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
 
-        public InvoicesDbContext() : base("DefaultConnection"){ }
+        public InvoicesDbContext() : base("DefaultConnection", throwIfV1Schema: false) { }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -239,10 +239,10 @@
     <Content Include="Views\Invoices\Index.cshtml" />
     <Content Include="Views\Invoices\Create.cshtml" />
     <Content Include="Views\Invoices\Edit.cshtml" />
-    <Content Include="Views\Invoices\AddItem.cshtml" />
     <Content Include="Views\Invoices\Delete.cshtml" />
-    <Content Include="Views\Invoices\Items.cshtml" />
     <Content Include="Views\Invoices\Invoice.cshtml" />
+    <Content Include="Views\Invoices\Items.cshtml" />
+    <Content Include="Views\Invoices\AddItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
